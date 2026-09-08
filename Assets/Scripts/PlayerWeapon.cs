@@ -13,6 +13,7 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private float _cooldown;
     [SerializeField] private int _maxMagazine;
     [SerializeField] private FlameEffect _flameEffect;
+    [SerializeField] private FlameEffect _bulletImpactEffectPrefab;
     
     private float _currentCooldown;
     private int _currentMagazine;
@@ -47,6 +48,13 @@ public class PlayerWeapon : MonoBehaviour
         _flameEffect.Play();
     }
 
+    private void PlayBulletImpactEffect(RaycastHit hit)
+    {
+        Transform effectTransform = Instantiate(_bulletImpactEffectPrefab).transform;
+        effectTransform.position = hit.point;
+        effectTransform.forward = hit.normal;
+    }
+
     private bool TryGetDamageable(out IDamageable damageable)
     {
         bool result = false;
@@ -57,6 +65,7 @@ public class PlayerWeapon : MonoBehaviour
         
         if (Physics.Raycast(ray, out hit, _range))
         {
+            PlayBulletImpactEffect(hit);
             result = hit.transform.TryGetComponent(out damageable);
         }
 
