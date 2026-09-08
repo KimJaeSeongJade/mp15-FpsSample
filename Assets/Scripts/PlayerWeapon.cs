@@ -12,6 +12,7 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private int _damage;
     [SerializeField] private float _cooldown;
     [SerializeField] private int _maxMagazine;
+    [SerializeField] private FlameEffect _flameEffect;
     
     private float _currentCooldown;
     private int _currentMagazine;
@@ -33,10 +34,17 @@ public class PlayerWeapon : MonoBehaviour
         
         _currentMagazine--;
         _currentCooldown = 0f;
+        PlayFlameEffect();
 
         if (!TryGetDamageable(out IDamageable damageable)) return;
         
         damageable.TakeDamage(_damage);
+    }
+
+    private void PlayFlameEffect()
+    {
+        _flameEffect.gameObject.SetActive(true);
+        _flameEffect.Play();
     }
 
     private bool TryGetDamageable(out IDamageable damageable)

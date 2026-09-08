@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour, IDamageable
+public class TurretController : MonoBehaviour
 {
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _cooldown;
@@ -132,15 +132,5 @@ public class TurretController : MonoBehaviour, IDamageable
                 Debug.Log("플레이어 감지");
             }
         }
-    }
-
-    public GameObject GameObject
-    {
-        get => gameObject;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        Debug.Log("터렛 데미지");
     }
 }
