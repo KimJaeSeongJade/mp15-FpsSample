@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    private Transform _cameraTransform;
-
     [SerializeField] private KeyCode _fireKey = KeyCode.Mouse0;
     [SerializeField] private KeyCode _reloadKey = KeyCode.R;
-    [SerializeField] private float _range;
-    [SerializeField] private int _damage;
-    [SerializeField] private float _cooldown;
     [SerializeField] private int _maxMagazine;
     [SerializeField] private FlameEffect _flameEffect;
     [SerializeField] private FlameEffect _bulletImpactEffectPrefab;
+ 
+    private Transform _cameraTransform;
+    private PlayerStat _stat;
     
     private float _currentCooldown;
     private int _currentMagazine;
+    
+    private float _range => _stat.WeaponRange;
+    private int _damage => _stat.Damage;
+    private float _cooldown => _stat.WeaponCooldown;
     private bool _isPressedFire => Input.GetKey(_fireKey);
     private bool _isPressedReload => Input.GetKeyDown(_reloadKey);
     private bool _isReadyFire => _currentCooldown >= _cooldown;
     private bool _hasBullets => _currentMagazine > 0;
     private bool _canFire => _isPressedFire && _isReadyFire && _hasBullets;
-    
+
     // ------------------------------------------
     private void Awake() => CacheComponents();
     private void Start() => Init();
@@ -75,6 +77,7 @@ public class PlayerWeapon : MonoBehaviour
     private void CacheComponents()
     {
         _cameraTransform = Camera.main.transform;
+        _stat = GetComponentInParent<PlayerStat>();
     }
 
     private void Init()

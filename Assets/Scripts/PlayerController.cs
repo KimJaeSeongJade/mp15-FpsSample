@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IInteractor
+public class PlayerController : MonoBehaviour, IInteractor, IDamageable
 {
     [SerializeField] private Transform _cameraPivot;
-    [SerializeField] private float _detectionRange;
     [SerializeField] private KeyCode _interactionKey = KeyCode.E;
     
     private PlayerWeapon _weapon;
     private PlayerMovement _movement;
+    private PlayerStat _stat;
     private Transform _cameraTransform;
     
     private IInteractable _targetInteractable;
 
+    private int _health => _stat.Health;
+    private float _detectionRange => _stat.InteractRange;
+    public PlayerStat Stat => _stat;
     private bool _hasDetectInteractable => _targetInteractable != null;
     private bool _isPressedInteractionKey => Input.GetKeyDown(_interactionKey);
     private bool _canInteraction => _hasDetectInteractable && _isPressedInteractionKey;
@@ -45,6 +48,7 @@ public class PlayerController : MonoBehaviour, IInteractor
     {
         _movement = GetComponent<PlayerMovement>();
         _weapon = GetComponentInChildren<PlayerWeapon>();
+        _stat = GetComponent<PlayerStat>();
         _cameraTransform = Camera.main.transform;
     }
 
@@ -109,5 +113,10 @@ public class PlayerController : MonoBehaviour, IInteractor
         
         _targetInteractable.Interact(this);
         _targetInteractable = null;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _stat.Health -= damage;
     }
 }

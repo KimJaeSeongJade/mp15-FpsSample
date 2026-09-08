@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed;
 
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private float _mouseSensitivity;
@@ -13,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
 
     private float _pitch;
     private Rigidbody _rigidbody;
+    private PlayerStat _stat;
+    
+    private float _moveSpeed => _stat.MoveSpeed;
 
     private void Awake() => CacheComponents();
 
@@ -68,5 +70,6 @@ public class PlayerMovement : MonoBehaviour
     private void CacheComponents()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _stat = GetComponent<PlayerStat>();
     }
 }
