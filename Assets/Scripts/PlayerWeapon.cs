@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
@@ -8,20 +9,29 @@ public class PlayerWeapon : MonoBehaviour
 
     [SerializeField] private KeyCode _fireKey = KeyCode.Mouse0;
     [SerializeField] private KeyCode _reloadKey = KeyCode.R;
+    [SerializeField] private KeyCode _grenadeKey = KeyCode.Alpha3;
     [SerializeField] private float _range;
     [SerializeField] private int _damage;
     [SerializeField] private float _cooldown;
     [SerializeField] private int _maxMagazine;
+    [SerializeField] private float _maxGrenadeThrowForce;
+    [SerializeField] private GrenadeController _grenadePrefab;
     [SerializeField] private FlameEffect _flameEffect;
     [SerializeField] private FlameEffect _bulletImpactEffectPrefab;
+    [SerializeField] private Transform _generadePoint;
     
+    [SerializeField] private float _currentGrenadeThrowForce;
     private float _currentCooldown;
     private int _currentMagazine;
+    private bool _isPressGrenadeKey => Input.GetKey(_grenadeKey);
+    private bool _isUpGrenadeKey => Input.GetKeyUp(_grenadeKey);
     private bool _isPressedFire => Input.GetKey(_fireKey);
     private bool _isPressedReload => Input.GetKeyDown(_reloadKey);
+    private bool _hasEnoughForce => _currentMagazine >= _maxMagazine * 0.3;
     private bool _isReadyFire => _currentCooldown >= _cooldown;
     private bool _hasBullets => _currentMagazine > 0;
     private bool _canFire => _isPressedFire && _isReadyFire && _hasBullets;
+    private bool _canThrowGrenade => _isUpGrenadeKey && _hasEnoughForce;
     
     // ------------------------------------------
     private void Awake() => CacheComponents();
@@ -88,6 +98,31 @@ public class PlayerWeapon : MonoBehaviour
         if (_isReadyFire) return;
         
         _currentCooldown += Time.deltaTime;
+    }
+
+    public void GrenadeThrowCharge()
+    {
+        if (!_isPressGrenadeKey) return;
+        
+        _currentGrenadeThrowForce += Time.deltaTime * _maxGrenadeThrowForce;
+        _currentGrenadeThrowForce = Mathf.Clamp(_currentGrenadeThrowForce, 0f, _maxGrenadeThrowForce);
+    }
+
+    public void GrenadeThrowRelease()
+    {
+        if (!_isUpGrenadeKey) return;
+        
+        if (!_hasEnoughForce)
+        {
+            _currentGrenadeThrowForce = 0f;
+            return;
+        }
+        
+        Vector3 force = transform.forward * _currentGrenadeThrowForce;
+        
+        Instantiate(_grenadePrefab, _generadePoint.position, _generadePoint.rotation)
+            .Throw(force);
+        _currentGrenadeThrowForce = 0f;
     }
 
     public void Reload()

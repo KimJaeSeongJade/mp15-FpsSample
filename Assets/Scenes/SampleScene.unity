@@ -523,6 +523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _deactivateDelay: 0.3
   _isDestroy: 0
+  _playInStart: 0
 --- !u!1001 &1355630151097813270
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -535,6 +536,14 @@ PrefabInstance:
       propertyPath: _flameEffect
       value: 
       objectReference: {fileID: 2059452661}
+    - target: {fileID: 2434978465833449181, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
+      propertyPath: _generadePoint
+      value: 
+      objectReference: {fileID: 1355630151097813271}
+    - target: {fileID: 2434978465833449181, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
+      propertyPath: _maxGrenadeThrowForce
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2434978465833449181, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
       propertyPath: _bulletImpactEffectPrefab
       value: 
@@ -583,6 +592,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6695062451850606770, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
+      propertyPath: Health
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7854411951037705621, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
       propertyPath: m_UseGravity
       value: 1
@@ -595,6 +608,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2059452661}
   m_SourcePrefab: {fileID: 100100000, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
+--- !u!4 &1355630151097813271 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9044791906783029779, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
+  m_PrefabInstance: {fileID: 1355630151097813270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8497698872294664596
 PrefabInstance:
   m_ObjectHideFlags: 0

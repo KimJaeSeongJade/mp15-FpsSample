@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IInteractor
+public class PlayerController : MonoBehaviour, IInteractor, IDamageable
 {
+    [SerializeField] private int Health;
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private float _detectionRange;
     [SerializeField] private KeyCode _interactionKey = KeyCode.E;
@@ -28,8 +29,12 @@ public class PlayerController : MonoBehaviour, IInteractor
     private void Update()
     {
         _movement.Rotate();
+        
         _weapon.Fire();
         _weapon.Reload();
+        _weapon.GrenadeThrowCharge();
+        _weapon.GrenadeThrowRelease();
+        
         DetectInteractable();
         TryInteract();
     }
@@ -109,5 +114,10 @@ public class PlayerController : MonoBehaviour, IInteractor
         
         _targetInteractable.Interact(this);
         _targetInteractable = null;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
     }
 }
