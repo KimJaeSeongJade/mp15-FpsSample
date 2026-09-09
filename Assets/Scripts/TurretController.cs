@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
-public class TurretController : MonoBehaviour
+public class TurretController : MonoBehaviour, IDamageable
 {
     [SerializeField] private LayerMask _raycastTargetLayer;
+    [SerializeField] private int _health;
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _cooldown;
     [SerializeField] private Transform _headTransform;
     [SerializeField] private Transform _muzzlePoint;
+    [SerializeField] private GameObject _dieEffect;
     
     [Header("Bullet")]
     [SerializeField] private BulletController _bulletPrefab;
@@ -24,7 +26,9 @@ public class TurretController : MonoBehaviour
     private bool _isPlayerInTrigger { get { return _playerTransform != null; } }
     private bool _isPlayerInSight = false;
     private bool _isReadyToFire { get { return _currentCooldown >= _cooldown; } }
-    
+
+    public GameObject GameObject { get => gameObject; }
+
     // Unity Event Method -----------------------
     private void Awake() => CacheComponents();
 
@@ -111,5 +115,18 @@ public class TurretController : MonoBehaviour
             if (hit.transform != _playerTransform) return;
             _isPlayerInSight = true;
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
+
+        if (_health <= 0) Die();
+    }
+
+    private void Die()
+    {
+        Instantiate(_dieEffect, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }
