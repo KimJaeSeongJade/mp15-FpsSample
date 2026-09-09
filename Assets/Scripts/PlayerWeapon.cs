@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    private Transform _cameraTransform;
-
+    [SerializeField] private LayerMask _targetLayer;
     [SerializeField] private KeyCode _fireKey = KeyCode.Mouse0;
     [SerializeField] private KeyCode _reloadKey = KeyCode.R;
     [SerializeField] private float _range;
@@ -15,8 +14,10 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private FlameEffect _flameEffect;
     [SerializeField] private FlameEffect _bulletImpactEffectPrefab;
     
+    private Transform _cameraTransform;
     private float _currentCooldown;
     private int _currentMagazine;
+    
     private bool _isPressedFire => Input.GetKey(_fireKey);
     private bool _isPressedReload => Input.GetKeyDown(_reloadKey);
     private bool _isReadyFire => _currentCooldown >= _cooldown;
@@ -63,7 +64,7 @@ public class PlayerWeapon : MonoBehaviour
         Ray ray = new Ray(_cameraTransform.position, _cameraTransform.forward);
         RaycastHit hit;
         
-        if (Physics.Raycast(ray, out hit, _range))
+        if (Physics.Raycast(ray, out hit, _range, _targetLayer))
         {
             PlayBulletImpactEffect(hit);
             result = hit.transform.TryGetComponent(out damageable);

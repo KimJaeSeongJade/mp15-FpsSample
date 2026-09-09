@@ -45,12 +45,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69b2a26192b6304681c04b2de45e4bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 704
   _fireKey: 323
   _reloadKey: 114
   _range: 10
   _damage: 15
   _cooldown: 0.2
   _maxMagazine: 30
+  _flameEffect: {fileID: 5892448560228164007}
+  _bulletImpactEffectPrefab: {fileID: 1333940125477610066, guid: c73503b14097d10419f495a82f1157f4, type: 3}
 --- !u!1 &4824577610250734049
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,7 +69,7 @@ GameObject:
   - component: {fileID: 7854411951037705621}
   - component: {fileID: 6695062451850606770}
   - component: {fileID: 1811217008840091953}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -362,8 +367,31 @@ PrefabInstance:
     - {fileID: 11400002, guid: 8eaaa4f553116f44b8459bc24201c514, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 8eaaa4f553116f44b8459bc24201c514, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5892448560228164007}
   m_SourcePrefab: {fileID: 100100000, guid: 8eaaa4f553116f44b8459bc24201c514, type: 3}
+--- !u!1 &5972296047976868423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 8eaaa4f553116f44b8459bc24201c514, type: 3}
+  m_PrefabInstance: {fileID: 5972296047976836327}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5892448560228164007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5972296047976868423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 707e12e6b61eb1d41891042b220f8d6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deactivateDelay: 0.3
+  _isDestroy: 0
+  _playInStart: 0
 --- !u!4 &5972296047977231975 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 8eaaa4f553116f44b8459bc24201c514, type: 3}
