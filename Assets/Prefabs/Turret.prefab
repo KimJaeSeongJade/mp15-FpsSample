@@ -213,6 +213,7 @@ MonoBehaviour:
   _headTransform: {fileID: 692855790937966708}
   _muzzlePoint: {fileID: 6705766232241388529}
   _dieEffect: {fileID: 8390949425051182462, guid: 610eeb9149fccf74989edd60cf6c3372, type: 3}
+  _damageUIPrefab: {fileID: 5210371857714173475, guid: 12dae822034bc7142b8aedae49f9ff54, type: 3}
   _bulletPrefab: {fileID: 9182009987800015767, guid: 0dc43896af5600746a62e15355de0fab, type: 3}
   _bulletDamage: 10
   _bulletSpeed: 4

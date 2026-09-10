@@ -12,6 +12,7 @@ public class TurretController : MonoBehaviour, IDamageable
     [SerializeField] private Transform _headTransform;
     [SerializeField] private Transform _muzzlePoint;
     [SerializeField] private GameObject _dieEffect;
+    [SerializeField] private DamageUI _damageUIPrefab;
     
     [Header("Bullet")]
     [SerializeField] private BulletController _bulletPrefab;
@@ -127,11 +128,13 @@ public class TurretController : MonoBehaviour, IDamageable
         _ui.RefreshHealthUI(_currentHealth, _maxHealth);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(DamageInfo info)
     {
-        _currentHealth -= damage;
+        _currentHealth -= info.Value;
         _ui.RefreshHealthUI(_currentHealth, _maxHealth);
 
+        PrintDamage(info);
+        
         if (_currentHealth <= 0) Die();
     }
 
@@ -139,5 +142,12 @@ public class TurretController : MonoBehaviour, IDamageable
     {
         Instantiate(_dieEffect, transform.position, transform.rotation);
         Destroy(gameObject);
+    }
+
+    private void PrintDamage(DamageInfo info)
+    {
+        Instantiate(_damageUIPrefab)
+            .SetDamage(info)
+            .Activate();
     }
 }

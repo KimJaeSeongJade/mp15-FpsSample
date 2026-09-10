@@ -42,9 +42,9 @@ public class PlayerWeapon : MonoBehaviour
         PlayFlameEffect();
         _ui.RefreshMagazineUI(_currentMagazine, _maxMagazine);
 
-        if (!TryGetDamageable(out IDamageable damageable)) return;
+        if (!TryGetDamageInfo(out DamageInfo damage)) return;
         
-        damageable.TakeDamage(_damage);
+        damage.Target.TakeDamage(damage);
     }
 
     private void PlayFlameEffect()
@@ -60,10 +60,9 @@ public class PlayerWeapon : MonoBehaviour
         effectTransform.forward = hit.normal;
     }
 
-    private bool TryGetDamageable(out IDamageable damageable)
+    private bool TryGetDamageInfo(out DamageInfo info)
     {
-        bool result = false;
-        damageable = null;
+        info = new DamageInfo();
         
         Ray ray = new Ray(_cameraTransform.position, _cameraTransform.forward);
         RaycastHit hit;
@@ -71,10 +70,14 @@ public class PlayerWeapon : MonoBehaviour
         if (Physics.Raycast(ray, out hit, _range, _targetLayer))
         {
             PlayBulletImpactEffect(hit);
-            result = hit.transform.TryGetComponent(out damageable);
+            IDamageable damageable;
+            if (hit.transform.TryGetComponent(out damageable))
+            {
+                info = new DamageInfo(damageable, _damage, hit.point);
+            }
         }
 
-        return result;
+        return info.IsValid;
     }
 
     private void CacheComponents()
