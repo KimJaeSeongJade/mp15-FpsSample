@@ -14,6 +14,7 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private FlameEffect _flameEffect;
     [SerializeField] private FlameEffect _bulletImpactEffectPrefab;
     
+    private PlayerUIController _ui;
     private Transform _cameraTransform;
     private float _currentCooldown;
     private int _currentMagazine;
@@ -39,6 +40,7 @@ public class PlayerWeapon : MonoBehaviour
         _currentMagazine--;
         _currentCooldown = 0f;
         PlayFlameEffect();
+        _ui.RefreshMagazineUI(_currentMagazine, _maxMagazine);
 
         if (!TryGetDamageable(out IDamageable damageable)) return;
         
@@ -78,12 +80,14 @@ public class PlayerWeapon : MonoBehaviour
     private void CacheComponents()
     {
         _cameraTransform = Camera.main.transform;
+        _ui = GetComponentInParent<PlayerUIController>();
     }
 
     private void Init()
     {
         _currentCooldown = 0f;
         _currentMagazine = _maxMagazine;
+        _ui.RefreshMagazineUI(_currentMagazine, _maxMagazine);
     }
 
     private void UpdateCooldown()

@@ -224,6 +224,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &85623023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4824577610250734049, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
+  m_PrefabInstance: {fileID: 1355630151097813270}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &85623029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85623023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6cd1c4df44f9c746b6f6f32196590ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _magazine: {fileID: 1897778490}
 --- !u!1001 &313850682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -698,7 +716,7 @@ GameObject:
   - component: {fileID: 1897778491}
   - component: {fileID: 1897778490}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MagazineText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -743,10 +761,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u314E\u3141\u3134\u3147\u314E"
+  m_text: mag
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dcba046fc96c1f641b06c57eb28ad5bb, type: 2}
-  m_sharedMaterial: {fileID: -3892113837641461005, guid: dcba046fc96c1f641b06c57eb28ad5bb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 14abb61e69f9efa4c9d5c85d5df455f3, type: 2}
+  m_sharedMaterial: {fileID: 1560153770385423224, guid: 14abb61e69f9efa4c9d5c85d5df455f3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -908,6 +926,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4824577610250734049, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 85623029}
     - targetCorrespondingSourceObject: {fileID: 5972296047976868423, guid: 4d60c2ca07d537846b356c5fd15db634, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2059452661}

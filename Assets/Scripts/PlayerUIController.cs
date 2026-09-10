@@ -7,18 +7,9 @@ using TMPro;
 public class PlayerUIController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _magazine;
-    private PlayerWeapon _weapon;
-
-    private void Awake() => CacheComponents();
-    private void Update() => RefreshMagazineUI();
     
-    private void CacheComponents()
+    public void RefreshMagazineUI(int magazine, int maxMagazine)
     {
-        _weapon = GetComponentInChildren<PlayerWeapon>();
-    }
-
-    public void RefreshMagazineUI()
-    {
-        _magazine.text = $"{_weapon.CurrentMagazine} / {_weapon.MaxMagazine}";
+        _magazine.text = $"{magazine} / {maxMagazine}";
     }
 }
