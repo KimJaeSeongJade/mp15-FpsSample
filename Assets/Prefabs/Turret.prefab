@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f41c1524c124ce43bad60a17c2f2ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gaugeTransform: {fileID: 1257682618391958997}
   _gauge: {fileID: 8352579815031971658}
   _text: {fileID: 5640795951204759874}
 --- !u!1 &2524715104092441524
