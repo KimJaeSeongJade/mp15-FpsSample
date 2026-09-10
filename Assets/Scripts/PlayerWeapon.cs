@@ -102,5 +102,6 @@ public class PlayerWeapon : MonoBehaviour
         if (!_isPressedReload) return;
         
         _currentMagazine = _maxMagazine;
+        _ui.RefreshMagazineUI(_currentMagazine, _maxMagazine);
     }
 }
