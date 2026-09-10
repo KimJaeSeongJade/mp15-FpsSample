@@ -54,7 +54,7 @@ MonoBehaviour:
   _damage: 15
   _cooldown: 0.2
   _maxMagazine: 30
-  _flameEffect: {fileID: 5892448560228164007}
+  _flameEffect: {fileID: 2710120858858356558}
   _bulletImpactEffectPrefab: {fileID: 1333940125477610066, guid: c73503b14097d10419f495a82f1157f4, type: 3}
 --- !u!1 &4824577610250734049
 GameObject:
@@ -138,7 +138,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -371,6 +371,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 8eaaa4f553116f44b8459bc24201c514, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5892448560228164007}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 8eaaa4f553116f44b8459bc24201c514, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2710120858858356558}
   m_SourcePrefab: {fileID: 100100000, guid: 8eaaa4f553116f44b8459bc24201c514, type: 3}
 --- !u!1 &5972296047976868423 stripped
 GameObject:
@@ -378,6 +381,21 @@ GameObject:
   m_PrefabInstance: {fileID: 5972296047976836327}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &5892448560228164007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5972296047976868423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 707e12e6b61eb1d41891042b220f8d6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deactivateDelay: 0.3
+  _isDestroy: 0
+  _playInStart: 0
+--- !u!114 &2710120858858356558
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

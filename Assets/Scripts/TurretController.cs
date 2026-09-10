@@ -6,7 +6,7 @@ using UnityEngine;
 public class TurretController : MonoBehaviour, IDamageable
 {
     [SerializeField] private LayerMask _raycastTargetLayer;
-    [SerializeField] private int _health;
+    [SerializeField] private int _maxHealth;
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _cooldown;
     [SerializeField] private Transform _headTransform;
@@ -19,9 +19,11 @@ public class TurretController : MonoBehaviour, IDamageable
     [SerializeField] private float _bulletSpeed;
     [SerializeField] private float _bulletDestroyDelay;
 
+    private int _currentHealth;
     private float _currentCooldown;
     private Transform _playerTransform => _detectionTrigger.TargetTransform;
     private DetectionTrigger _detectionTrigger;
+    private EnemyUIController _ui;
     
     private bool _isPlayerInTrigger { get { return _playerTransform != null; } }
     private bool _isPlayerInSight = false;
@@ -31,6 +33,7 @@ public class TurretController : MonoBehaviour, IDamageable
 
     // Unity Event Method -----------------------
     private void Awake() => CacheComponents();
+    private void Start() => Init();
 
     private void Update()
     {
@@ -45,6 +48,7 @@ public class TurretController : MonoBehaviour, IDamageable
     private void CacheComponents()
     {
         _detectionTrigger = GetComponentInChildren<DetectionTrigger>();
+        _ui = GetComponent<EnemyUIController>();
     }
 
     private void Fire()
@@ -117,11 +121,18 @@ public class TurretController : MonoBehaviour, IDamageable
         }
     }
 
+    private void Init()
+    {
+        _currentHealth = _maxHealth;
+        _ui.RefreshHealthUI(_currentHealth, _maxHealth);
+    }
+
     public void TakeDamage(int damage)
     {
-        _health -= damage;
+        _currentHealth -= damage;
+        _ui.RefreshHealthUI(_currentHealth, _maxHealth);
 
-        if (_health <= 0) Die();
+        if (_currentHealth <= 0) Die();
     }
 
     private void Die()

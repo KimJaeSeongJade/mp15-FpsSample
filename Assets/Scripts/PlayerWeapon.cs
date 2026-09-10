@@ -18,6 +18,8 @@ public class PlayerWeapon : MonoBehaviour
     private float _currentCooldown;
     private int _currentMagazine;
     
+    public int CurrentMagazine => _currentMagazine;
+    public int MaxMagazine => _maxMagazine;
     private bool _isPressedFire => Input.GetKey(_fireKey);
     private bool _isPressedReload => Input.GetKeyDown(_reloadKey);
     private bool _isReadyFire => _currentCooldown >= _cooldown;
