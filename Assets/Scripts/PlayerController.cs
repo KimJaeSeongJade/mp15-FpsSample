@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IInteractor
 {
+    [SerializeField] private GameManager _gameManager;
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private float _detectionRange;
     [SerializeField] private KeyCode _interactionKey = KeyCode.E;
@@ -22,11 +23,12 @@ public class PlayerController : MonoBehaviour, IInteractor
 
     // -----------------------------------------------
     private void Awake() => CacheComponents();
-    private void Start() => LockCursor();
     private void FixedUpdate() => _movement.Move();
 
     private void Update()
     {
+        if (!_gameManager.IsGameRunning) return;
+        
         _movement.Rotate();
         _weapon.Fire();
         _weapon.Reload();
@@ -48,11 +50,7 @@ public class PlayerController : MonoBehaviour, IInteractor
         _cameraTransform = Camera.main.transform;
     }
 
-    private void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+    
 
     private void SetWeaponTransform()
     {
@@ -68,9 +66,6 @@ public class PlayerController : MonoBehaviour, IInteractor
             _cameraPivot.position,
             _cameraPivot.rotation
             );
-        
-        // _cameraTransform.position = _cameraPivot.position;
-        // _cameraTransform.rotation = _cameraPivot.rotation;
     }
 
     public void DetectInteractable()
