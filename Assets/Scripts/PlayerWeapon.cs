@@ -5,8 +5,6 @@ using UnityEngine;
 public class PlayerWeapon : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayer;
-    [SerializeField] private KeyCode _fireKey = KeyCode.Mouse0;
-    [SerializeField] private KeyCode _reloadKey = KeyCode.R;
     [SerializeField] private float _range;
     [SerializeField] private int _damage;
     [SerializeField] private float _cooldown;
@@ -21,11 +19,9 @@ public class PlayerWeapon : MonoBehaviour
     
     public int CurrentMagazine => _currentMagazine;
     public int MaxMagazine => _maxMagazine;
-    private bool _isPressedFire => Input.GetKey(_fireKey);
-    private bool _isPressedReload => Input.GetKeyDown(_reloadKey);
     private bool _isReadyFire => _currentCooldown >= _cooldown;
     private bool _hasBullets => _currentMagazine > 0;
-    private bool _canFire => _isPressedFire && _isReadyFire && _hasBullets;
+    private bool _canFire => _isReadyFire && _hasBullets;
     
     // ------------------------------------------
     private void Awake() => CacheComponents();
@@ -102,8 +98,6 @@ public class PlayerWeapon : MonoBehaviour
 
     public void Reload()
     {
-        if (!_isPressedReload) return;
-        
         _currentMagazine = _maxMagazine;
         _ui.RefreshMagazineUI(_currentMagazine, _maxMagazine);
     }

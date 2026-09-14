@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour, IInteractor
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private Transform _cameraPivot;
     [SerializeField] private float _detectionRange;
-    [SerializeField] private KeyCode _interactionKey = KeyCode.E;
     
     private PlayerWeapon _weapon;
     private PlayerMovement _movement;
@@ -16,41 +15,46 @@ public class PlayerController : MonoBehaviour, IInteractor
     private IInteractable _targetInteractable;
 
     private bool _hasDetectInteractable => _targetInteractable != null;
-    private bool _isPressedInteractionKey => Input.GetKeyDown(_interactionKey);
-    private bool _canInteraction => _hasDetectInteractable && _isPressedInteractionKey;
 
     public GameObject GameObject { get => gameObject; }
+    public InputManager PlayerInput => InputManager.Instance;
 
     // -----------------------------------------------
     private void Awake() => CacheComponents();
-    private void FixedUpdate() => _movement.Move();
-
-    private void Update()
-    {
-        if (!_gameManager.IsGameRunning) return;
-        
-        _movement.Rotate();
-        _weapon.Fire();
-        _weapon.Reload();
-        DetectInteractable();
-        TryInteract();
-    }
-
+    private void OnEnable() => BindInputAcions();
+    private void Update() => DetectInteractable();
     private void LateUpdate()
     {
         SetWeaponTransform();
         SetCameraTransform();
     }
+    private void OnDisable() => UnbindInputAcions();
     // -----------------------------------------------
     
+    private void BindInputAcions()
+    {
+        PlayerInput.Move += _movement.Move;
+        PlayerInput.Rotate += _movement.Rotate;
+        PlayerInput.Fire += _weapon.Fire;
+        PlayerInput.Reload += _weapon.Reload;
+        PlayerInput.Interact += TryInteract;
+    }
+
+    private void UnbindInputAcions()
+    {
+        PlayerInput.Move -= _movement.Move;
+        PlayerInput.Rotate -= _movement.Rotate;
+        PlayerInput.Fire -= _weapon.Fire;
+        PlayerInput.Reload -= _weapon.Reload;
+        PlayerInput.Interact -= TryInteract;
+    }
+
     private void CacheComponents()
     {
         _movement = GetComponent<PlayerMovement>();
         _weapon = GetComponentInChildren<PlayerWeapon>();
         _cameraTransform = Camera.main.transform;
     }
-
-    
 
     private void SetWeaponTransform()
     {
@@ -100,7 +104,7 @@ public class PlayerController : MonoBehaviour, IInteractor
 
     public void TryInteract()
     {
-        if (!_canInteraction) return;
+        if (!_hasDetectInteractable) return;
         
         _targetInteractable.Interact(this);
         _targetInteractable = null;
