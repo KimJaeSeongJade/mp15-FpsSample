@@ -158,6 +158,7 @@ MonoBehaviour:
   _gameManager: {fileID: 0}
   _cameraPivot: {fileID: 9108561283680101479}
   _detectionRange: 4
+  _tryInteactCooldown: 0.2
 --- !u!114 &1811217008840091953
 MonoBehaviour:
   m_ObjectHideFlags: 0
