@@ -9,9 +9,11 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private int _damage;
     [SerializeField] private float _cooldown;
     [SerializeField] private int _maxMagazine;
+    [SerializeField] private float _reloadDelay;
     [SerializeField] private FlameEffect _flameEffect;
     [SerializeField] private FlameEffect _bulletImpactEffectPrefab;
     
+    private bool _isReloading;
     private PlayerUIController _ui;
     private Transform _cameraTransform;
     private float _currentCooldown;
@@ -19,9 +21,9 @@ public class PlayerWeapon : MonoBehaviour
     
     public int CurrentMagazine => _currentMagazine;
     public int MaxMagazine => _maxMagazine;
-    private bool _isReadyFire => _currentCooldown >= _cooldown;
+    private bool _isReadyFire => _currentCooldown >= _cooldown; 
     private bool _hasBullets => _currentMagazine > 0;
-    private bool _canFire => _isReadyFire && _hasBullets;
+    private bool _canFire => _isReadyFire && _hasBullets && !_isReloading;
     
     // ------------------------------------------
     private void Awake() => CacheComponents();
@@ -98,7 +100,16 @@ public class PlayerWeapon : MonoBehaviour
 
     public void Reload()
     {
+        if(_isReloading) return;
+        StartCoroutine(ReloadRoutine());
+    }
+
+    public IEnumerator ReloadRoutine()
+    {
+        _isReloading = true;
+        yield return new WaitForSeconds(_reloadDelay);
         _currentMagazine = _maxMagazine;
         _ui.RefreshMagazineUI(_currentMagazine, _maxMagazine);
+        _isReloading = false;
     }
 }
